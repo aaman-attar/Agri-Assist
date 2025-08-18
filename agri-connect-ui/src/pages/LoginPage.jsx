@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // ✅ Import useNavigate
-import { farmerLogin } from '../services/api'; // ✅ Use your API service
+import { useNavigate } from 'react-router-dom';
+import { farmerLogin } from '../services/api';
 
 const LoginPage = () => {
-  const navigate = useNavigate(); // ✅ Initialize navigate
+  const navigate = useNavigate();
   const [form, setForm] = useState({ name: '', phone: '', location: '' });
   const [message, setMessage] = useState('');
   const [farmer, setFarmer] = useState(null);
@@ -17,13 +17,13 @@ const LoginPage = () => {
     setMessage('');
 
     try {
-      const res = await farmerLogin(form); // ✅ Use api.js for backend call
+      const res = await farmerLogin(form);
       setMessage(res.data.msg);
       setFarmer(res.data.farmer);
       localStorage.setItem('farmer', JSON.stringify(res.data.farmer));
       localStorage.setItem('farmerPhone', res.data.farmer.phone);
 
-      navigate('/dashboard'); // ✅ Navigate to dashboard
+      navigate('/dashboard'); // Client-side navigation
     } catch (err) {
       console.error(err);
       setMessage('Something went wrong');

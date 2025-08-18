@@ -13,7 +13,7 @@ import QuickTipsPage from './pages/QuickTipsPage';
 
 function App() {
   return (
-    <Router basename={process.env.PUBLIC_URL}>
+    <Router>
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
@@ -25,6 +25,8 @@ function App() {
         <Route path="/listing/:id/edit" element={<EditListingPage />} />
         <Route path="/advisory" element={<CropAdvisoryPage />} />
         <Route path="/quick-tips" element={<QuickTipsPage />} />
+        {/* Fallback route */}
+        <Route path="*" element={<LoginPage />} />
       </Routes>
     </Router>
   );
