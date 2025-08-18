@@ -27,7 +27,7 @@ const LoginPage = () => {
     // }
     try {
   const res = await axios.post(
-    `${process.env.REACT_APP_API_URL}farmer-login/`,
+    'https://agri-assist-9t3e.onrender.com/api/farmer-login/',
     form
   );
 
@@ -40,6 +40,7 @@ const LoginPage = () => {
   console.error(err);
   setMessage('Something went wrong');
 }
+
   };
 
   return (
