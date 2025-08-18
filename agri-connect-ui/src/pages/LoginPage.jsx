@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { farmerLogin } from '../services/api';
+import { farmerLogin } from '../services/api'; // Use api.js service
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -22,24 +22,30 @@ const LoginPage = () => {
       if (res.data && res.data.farmer) {
         setMessage(res.data.msg);
         setFarmer(res.data.farmer);
+
+        // Save farmer info in localStorage
         localStorage.setItem('farmer', JSON.stringify(res.data.farmer));
         localStorage.setItem('farmerPhone', res.data.farmer.phone || '');
+
+        // Navigate to dashboard
         navigate('/dashboard');
       } else {
-        setMessage(res.data?.msg || 'Login failed. Please check your details.');
+        setMessage('Login failed. Please check your details.');
       }
     } catch (err) {
-      console.error('Login error:', err.response?.data || err);
-      setMessage(err.response?.data?.msg || 'Something went wrong');
+      console.error(err);
+      if (err.response && err.response.data) {
+        setMessage(err.response.data.msg || 'Login failed. Please check your details.');
+      } else {
+        setMessage('Something went wrong. Please try again later.');
+      }
     }
   };
 
   return (
     <div className="min-h-screen bg-green-100 flex justify-center items-center">
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold text-green-700 text-center mb-6">
-          Farmer Login/Register
-        </h2>
+        <h2 className="text-2xl font-bold text-green-700 text-center mb-6">Farmer Login/Register</h2>
 
         <input
           type="text"
@@ -79,7 +85,7 @@ const LoginPage = () => {
         </button>
 
         {message && (
-          <p className="text-center mt-4 text-green-600 font-medium">{message}</p>
+          <p className="text-center mt-4 text-red-600 font-medium">{message}</p>
         )}
         {farmer && (
           <p className="text-center text-gray-700 mt-2">
