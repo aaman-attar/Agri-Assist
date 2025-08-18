@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // <- import this
+import { farmerLogin } from '../services/api'; // <- import the API function
+
 
 const LoginPage = () => {
   const [form, setForm] = useState({ name: '', phone: '', location: '' });
@@ -26,16 +29,15 @@ const LoginPage = () => {
     //   setMessage('Something went wrong');
     // }
     try {
-  const res = await axios.post(
-    'https://agri-assist-9t3e.onrender.com/api/farmer-login/',
-    form
-  );
+        const res = await farmerLogin(form); // <- use API function from api.js
+
+
 
   setMessage(res.data.msg);
   setFarmer(res.data.farmer);
   localStorage.setItem('farmer', JSON.stringify(res.data.farmer));
   localStorage.setItem('farmerPhone', res.data.farmer.phone);
-  window.location.href = '/dashboard';
+  navigate('/dashboard'); // <- use navigate instead of window.location.href
 } catch (err) {
   console.error(err);
   setMessage('wrong');
