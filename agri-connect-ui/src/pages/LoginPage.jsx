@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // ✅ Import useNavigate
-import { farmerLogin } from '../services/api'; // ✅ Use your API service
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const LoginPage = () => {
-  const navigate = useNavigate(); // ✅ Initialize navigate
   const [form, setForm] = useState({ name: '', phone: '', location: '' });
   const [message, setMessage] = useState('');
-  const [farmer, setFarmer] = useState(null);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -17,13 +16,13 @@ const LoginPage = () => {
     setMessage('');
 
     try {
-      const res = await farmerLogin(form); // ✅ Use api.js for backend call
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}farmer-login/`, form);
+
       setMessage(res.data.msg);
-      setFarmer(res.data.farmer);
       localStorage.setItem('farmer', JSON.stringify(res.data.farmer));
       localStorage.setItem('farmerPhone', res.data.farmer.phone);
 
-      navigate('/dashboard'); // ✅ Navigate to dashboard
+      navigate('/dashboard'); // client-side redirect
     } catch (err) {
       console.error(err);
       setMessage('Something went wrong');
@@ -33,9 +32,7 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen bg-green-100 flex justify-center items-center">
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold text-green-700 text-center mb-6">
-          Farmer Login/Register
-        </h2>
+        <h2 className="text-2xl font-bold text-green-700 text-center mb-6">Farmer Login/Register</h2>
 
         <input
           type="text"
@@ -76,11 +73,6 @@ const LoginPage = () => {
 
         {message && (
           <p className="text-center mt-4 text-green-600 font-medium">{message}</p>
-        )}
-        {farmer && (
-          <p className="text-center text-gray-700 mt-2">
-            Hello <strong>{farmer.name}</strong> from {farmer.location}
-          </p>
         )}
       </form>
     </div>

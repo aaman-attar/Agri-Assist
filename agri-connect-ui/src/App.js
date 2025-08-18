@@ -11,16 +11,12 @@ import EditListingPage from './pages/EditListingPage';
 import CropAdvisoryPage from './pages/CropAdvisoryPage';
 import QuickTipsPage from './pages/QuickTipsPage';
 
-
-
-
 function App() {
   return (
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
-        {/* Feature pages will go here */}
         <Route path="/weather" element={<WeatherPage />} />
         <Route path="/market-prices" element={<MarketPricesPage />} />
         <Route path="/marketplace" element={<MarketplaceListPage />} />
@@ -29,7 +25,6 @@ function App() {
         <Route path="/listing/:id/edit" element={<EditListingPage />} />
         <Route path="/advisory" element={<CropAdvisoryPage />} />
         <Route path="/quick-tips" element={<QuickTipsPage />} />
-
       </Routes>
     </Router>
   );
