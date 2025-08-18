@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // <- import this
-import { farmerLogin } from '../services/api'; // <- import the API function
-
+import { useNavigate } from 'react-router-dom'; // ✅ Import useNavigate
+import { farmerLogin } from '../services/api'; // ✅ Use your API service
 
 const LoginPage = () => {
+  const navigate = useNavigate(); // ✅ Initialize navigate
   const [form, setForm] = useState({ name: '', phone: '', location: '' });
   const [message, setMessage] = useState('');
   const [farmer, setFarmer] = useState(null);
@@ -16,39 +15,27 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage('');
-    // try {
-    //   const res = await axios.post('http://127.0.0.1:8000/api/farmer-login/', form);
-    //   setMessage(res.data.msg);
-    //   setFarmer(res.data.farmer);
-    //   localStorage.setItem('farmer', JSON.stringify(res.data.farmer));
-    //   localStorage.setItem('farmerPhone', res.data.farmer.phone);
-    //   window.location.href = '/dashboard';
 
-    // } catch (err) {
-    //   console.error(err);
-    //   setMessage('Something went wrong');
-    // }
     try {
-        const res = await farmerLogin(form); // <- use API function from api.js
+      const res = await farmerLogin(form); // ✅ Use api.js for backend call
+      setMessage(res.data.msg);
+      setFarmer(res.data.farmer);
+      localStorage.setItem('farmer', JSON.stringify(res.data.farmer));
+      localStorage.setItem('farmerPhone', res.data.farmer.phone);
 
-
-
-  setMessage(res.data.msg);
-  setFarmer(res.data.farmer);
-  localStorage.setItem('farmer', JSON.stringify(res.data.farmer));
-  localStorage.setItem('farmerPhone', res.data.farmer.phone);
-  navigate('/dashboard'); // <- use navigate instead of window.location.href
-} catch (err) {
-  console.error(err);
-  setMessage('wrong');
-}
-
+      navigate('/dashboard'); // ✅ Navigate to dashboard
+    } catch (err) {
+      console.error(err);
+      setMessage('Something went wrong');
+    }
   };
 
   return (
     <div className="min-h-screen bg-green-100 flex justify-center items-center">
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold text-green-700 text-center mb-6">Farmer Login/Register</h2>
+        <h2 className="text-2xl font-bold text-green-700 text-center mb-6">
+          Farmer Login/Register
+        </h2>
 
         <input
           type="text"
