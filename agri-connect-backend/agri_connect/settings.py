@@ -81,16 +81,22 @@ WSGI_APPLICATION = 'agri_connect.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+# settings.py
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'agri_connect_db',
-        'USER': 'root',
-        'PASSWORD': '@sweetygs15',  # put your password if set
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'NAME': 'defaultdb',   # from the URL
+        'USER': 'avnadmin',
+        'PASSWORD': 'AVNS_zmSnqqBcvibQeqOsu-r',
+        'HOST': 'mysql-f7badd0-aamanattar01-63af.c.aivencloud.com',
+        'PORT': '11044',
+        'OPTIONS': {
+            'ssl': {'ssl-mode': 'REQUIRED'},
+        },
     }
 }
+
 
 
 
