@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { farmerLogin } from '../services/api'; // Use api.js service
+import axios from 'axios';
 
 const LoginPage = () => {
-  const navigate = useNavigate();
   const [form, setForm] = useState({ name: '', phone: '', location: '' });
   const [message, setMessage] = useState('');
   const [farmer, setFarmer] = useState(null);
@@ -15,30 +13,17 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage('');
-
     try {
-      const res = await farmerLogin(form);
+      const res = await axios.post('https://agri-assist-9t3e.onrender.com/api/farmer-login/', form);
+      setMessage(res.data.msg);
+      setFarmer(res.data.farmer);
+      localStorage.setItem('farmer', JSON.stringify(res.data.farmer));
+      localStorage.setItem('farmerPhone', res.data.farmer.phone);
+      window.location.href = '/dashboard';
 
-      if (res.data && res.data.farmer) {
-        setMessage(res.data.msg);
-        setFarmer(res.data.farmer);
-
-        // Save farmer info in localStorage
-        localStorage.setItem('farmer', JSON.stringify(res.data.farmer));
-        localStorage.setItem('farmerPhone', res.data.farmer.phone || '');
-
-        // Navigate to dashboard
-        navigate('/dashboard');
-      } else {
-        setMessage('Login failed. Please check your details.');
-      }
     } catch (err) {
       console.error(err);
-      if (err.response && err.response.data) {
-        setMessage(err.response.data.msg || 'Login failed. Please check your details.');
-      } else {
-        setMessage('Something went wrong. Please try again later.');
-      }
+      setMessage('Something went wrong');
     }
   };
 
@@ -85,7 +70,7 @@ const LoginPage = () => {
         </button>
 
         {message && (
-          <p className="text-center mt-4 text-red-600 font-medium">{message}</p>
+          <p className="text-center mt-4 text-green-600 font-medium">{message}</p>
         )}
         {farmer && (
           <p className="text-center text-gray-700 mt-2">
