@@ -38,7 +38,7 @@ const LoginPage = () => {
   window.location.href = '/dashboard';
 } catch (err) {
   console.error(err);
-  setMessage('Something went wrong');
+  setMessage('wrong');
 }
 
   };
