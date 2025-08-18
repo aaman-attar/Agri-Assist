@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-v21=61ui_)z&x^7af4i*xbfy69@5x*12l3m(^$#@)w=)=04fhd
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "agri-backend.onrender.com"]
 
 
 # Application definition
