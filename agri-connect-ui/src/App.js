@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import WeatherPage from './pages/WeatherPage';
-import MarketPricesPage from './pages/MarketPricesPage'; 
+import MarketPricesPage from './pages/MarketPricesPage';
 import MarketplaceListPage from './pages/MarketplaceListPage';
 import CreateListingPage from './pages/CreateListingPage';
 import ListingDetailPage from './pages/ListingDetailPage';
@@ -13,7 +13,7 @@ import QuickTipsPage from './pages/QuickTipsPage';
 
 function App() {
   return (
-    <Router basename={process.env.PUBLIC_URL || '/'}>
+    <Router basename={process.env.PUBLIC_URL}>
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />

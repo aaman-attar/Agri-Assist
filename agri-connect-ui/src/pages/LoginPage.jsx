@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { farmerLogin } from '../services/api';
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [form, setForm] = useState({ name: '', phone: '', location: '' });
   const [message, setMessage] = useState('');
-  const [farmer, setFarmer] = useState(null);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -14,16 +15,17 @@ const LoginPage = () => {
     e.preventDefault();
     setMessage('');
     try {
-      const res = await axios.post('https://agri-assist-9t3e.onrender.com/api/farmer-login/', form);
-      setMessage(res.data.msg);
-      setFarmer(res.data.farmer);
-      localStorage.setItem('farmer', JSON.stringify(res.data.farmer));
-      localStorage.setItem('farmerPhone', res.data.farmer.phone);
-      window.location.href = '/dashboard';
-
+      const res = await farmerLogin(form);
+      if (res.data && res.data.farmer) {
+        localStorage.setItem('farmer', JSON.stringify(res.data.farmer));
+        localStorage.setItem('farmerPhone', res.data.farmer.phone);
+        navigate('/dashboard'); // ✅ Use navigate
+      } else {
+        setMessage('Login failed! Please check your details.');
+      }
     } catch (err) {
       console.error(err);
-      setMessage('Something went wrong');
+      setMessage('Login failed! Please check your details.');
     }
   };
 
@@ -69,14 +71,7 @@ const LoginPage = () => {
           Submit
         </button>
 
-        {message && (
-          <p className="text-center mt-4 text-green-600 font-medium">{message}</p>
-        )}
-        {farmer && (
-          <p className="text-center text-gray-700 mt-2">
-            Hello <strong>{farmer.name}</strong> from {farmer.location}
-          </p>
-        )}
+        {message && <p className="text-center mt-4 text-red-600 font-medium">{message}</p>}
       </form>
     </div>
   );
