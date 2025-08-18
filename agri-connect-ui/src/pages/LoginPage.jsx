@@ -18,15 +18,19 @@ const LoginPage = () => {
 
     try {
       const res = await farmerLogin(form);
-      setMessage(res.data.msg);
-      setFarmer(res.data.farmer);
-      localStorage.setItem('farmer', JSON.stringify(res.data.farmer));
-      localStorage.setItem('farmerPhone', res.data.farmer.phone);
 
-      navigate('/dashboard'); // Client-side navigation
+      if (res.data && res.data.farmer) {
+        setMessage(res.data.msg);
+        setFarmer(res.data.farmer);
+        localStorage.setItem('farmer', JSON.stringify(res.data.farmer));
+        localStorage.setItem('farmerPhone', res.data.farmer.phone || '');
+        navigate('/dashboard');
+      } else {
+        setMessage(res.data?.msg || 'Login failed. Please check your details.');
+      }
     } catch (err) {
-      console.error(err);
-      setMessage('Something went wrong');
+      console.error('Login error:', err.response?.data || err);
+      setMessage(err.response?.data?.msg || 'Something went wrong');
     }
   };
 
