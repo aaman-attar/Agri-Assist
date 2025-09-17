@@ -66,6 +66,21 @@ const DashboardPage = () => {
           👋 {t('welcome', { name: farmer?.name || '', location: farmer?.location || '' })}
         </h1>
 
+        {/* In-card language switcher for better visibility */}
+        <div className="flex justify-end items-center mb-4">
+          <div className="bg-white/90 rounded px-3 py-2 text-sm border border-green-200">
+            <label className="mr-2 text-gray-700">{t('change_language')}:</label>
+            <select
+              value={lang}
+              onChange={(e) => setLang(e.target.value)}
+              className="border rounded px-2 py-1"
+            >
+              <option value="en">{t('lang_en')}</option>
+              <option value="hi">{t('lang_hi')}</option>
+            </select>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {features.map((feature) => (
             <Link
