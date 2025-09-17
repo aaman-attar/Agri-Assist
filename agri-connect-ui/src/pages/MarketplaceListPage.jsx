@@ -25,13 +25,13 @@ const MarketplaceListPage = () => {
   return (
     <div className="p-6 min-h-screen bg-green-50">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-3xl font-bold text-green-800 translatable">🌿 Marketplace</h2>
+        <h2 className="text-3xl font-bold text-green-800">🌿 Marketplace</h2>
         <div className="flex gap-2">
           <Link
             to="/create-listing"
             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
           >
-            <span className="translatable">+ Add Listing</span>
+            + Add Listing
           </Link>
           <button
             onClick={() => setShowMyListings((prev) => !prev)}
@@ -41,7 +41,7 @@ const MarketplaceListPage = () => {
                 : 'bg-green-600 text-white hover:bg-green-700'
             }`}
           >
-            <span className="translatable">{showMyListings ? 'All Listings' : 'My Listings'}</span>
+            {showMyListings ? 'All Listings' : 'My Listings'}
           </button>
         </div>
       </div>
@@ -78,7 +78,7 @@ const MarketplaceListPage = () => {
                 to={`/listing/${item.id}`}
                 className="block mt-4 text-blue-600 font-semibold underline"
               >
-                <span className="translatable">View Details</span>
+                View Details
               </Link>
 
               {item.contact === farmerPhone && (
@@ -86,7 +86,7 @@ const MarketplaceListPage = () => {
                   onClick={() => handleDelete(item.id)}
                   className="absolute top-2 right-2 bg-red-600 text-white px-2 py-1 text-xs rounded hover:bg-red-700"
                 >
-                  <span className="translatable">Delete</span>
+                  Delete
                 </button>
               )}
             </div>
@@ -95,7 +95,7 @@ const MarketplaceListPage = () => {
       </div>
 
       {filteredListings.length === 0 && (
-        <p className="text-center text-gray-600 mt-10 translatable">No listings found.</p>
+        <p className="text-center text-gray-600 mt-10">No listings found.</p>
       )}
     </div>
   );

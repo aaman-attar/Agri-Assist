@@ -39,7 +39,7 @@ const CreateListingPage = () => {
 
   return (
     <div className="p-6 max-w-xl mx-auto">
-      <h2 className="text-2xl font-bold mb-4 translatable">Add New Listing</h2>
+      <h2 className="text-2xl font-bold mb-4">Add New Listing</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           name="title"
@@ -76,11 +76,11 @@ const CreateListingPage = () => {
           onChange={handleChange}
           required
         >
-          <option value="" className="translatable">Select Category</option>
-          <option value="Tools" className="translatable">Tools</option>
-          <option value="Seeds" className="translatable">Seeds</option>
-          <option value="Fertilizers" className="translatable">Fertilizers</option>
-          <option value="Others" className="translatable">Others</option>
+          <option value="">Select Category</option>
+          <option value="Tools">Tools</option>
+          <option value="Seeds">Seeds</option>
+          <option value="Fertilizers">Fertilizers</option>
+          <option value="Others">Others</option>
         </select>
 
         <input
@@ -108,7 +108,7 @@ const CreateListingPage = () => {
         />
 
         <button className="bg-blue-600 text-white px-4 py-2 rounded">
-          <span className="translatable">Submit</span>
+          Submit
         </button>
       </form>
     </div>

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaSignOutAlt } from 'react-icons/fa';
-import { useLanguage } from '../context/LanguageContext';
-import { setLanguage as setSiteLanguage, getLanguage as getSiteLanguage } from '../utils/translator';
+// Language functionality removed
 
 const features = [
   { name: 'Market Price', route: '/market-prices', translationKey: 'feature_market_prices' },
@@ -15,8 +14,7 @@ const features = [
 const DashboardPage = () => {
   const [farmer, setFarmer] = useState(null);
   const navigate = useNavigate();
-  const { t } = useLanguage();
-  const [currentLang, setCurrentLang] = useState('en');
+  
 
   useEffect(() => {
     const stored = localStorage.getItem('farmer');
@@ -33,15 +31,6 @@ const DashboardPage = () => {
     navigate('/');
   };
 
-  const handleTranslate = async (target) => {
-    setCurrentLang(target);
-    await setSiteLanguage(target);
-  };
-  useEffect(() => {
-    // initialize current language from global translator
-    setCurrentLang(getSiteLanguage() || 'en');
-  }, []);
-
   return (
     <div
       className="min-h-screen bg-green-50 relative"
@@ -53,30 +42,17 @@ const DashboardPage = () => {
       }}
     >
       <div className="absolute top-4 right-4 flex gap-3 items-center">
-        <div className="bg-white/80 rounded px-2 py-1 text-sm flex items-center gap-2">
-          <span className="text-gray-700 translatable">{t('change_language')}:</span>
-          <select
-            value={currentLang}
-            onChange={(e) => handleTranslate(e.target.value)}
-            className="border rounded px-2 py-1"
-          >
-            <option value="en">English</option>
-            <option value="es">Spanish</option>
-            <option value="fr">French</option>
-            <option value="hi">Hindi</option>
-          </select>
-        </div>
         <button
           onClick={handleLogout}
           className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded flex items-center gap-2"
         >
-          <FaSignOutAlt /> {t('logout')}
+          <FaSignOutAlt /> Logout
         </button>
       </div>
 
       <div className="bg-white bg-opacity-80 max-w-4xl mx-auto mt-16 p-8 rounded shadow-md">
-        <h1 className="text-3xl font-bold text-green-800 mb-6 text-center translatable">
-          👋 {t('welcome', { name: farmer?.name || '', location: farmer?.location || '' })}
+        <h1 className="text-3xl font-bold text-green-800 mb-6 text-center">
+          👋 Welcome {farmer?.name} from {farmer?.location}
         </h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -86,10 +62,10 @@ const DashboardPage = () => {
               key={feature.name}
               className="block bg-white bg-opacity-90 p-6 rounded shadow-lg border border-green-200 hover:scale-105 transition-transform duration-300"
             >
-              <h2 className="text-xl font-semibold text-green-700 translatable">
-                {t(feature.translationKey)}
+              <h2 className="text-xl font-semibold text-green-700">
+                {feature.name}
               </h2>
-              <p className="text-sm text-gray-600 mt-2 translatable">Click to explore {feature.name}</p>
+              <p className="text-sm text-gray-600 mt-2">Click to explore {feature.name}</p>
             </Link>
           ))}
         </div>
