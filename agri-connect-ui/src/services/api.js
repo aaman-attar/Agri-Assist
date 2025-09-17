@@ -40,3 +40,7 @@ export const updateListing = (id, formData) =>
 export const deleteListing = (id) => API.delete(`marketplace/${id}/`);
 
 export const getQuickTips = () => API.get('quicktips/');
+
+// Batch translation (LibreTranslate via backend)
+export const translateBatch = (texts, target) =>
+  API.post('translate-batch/', { texts, target });

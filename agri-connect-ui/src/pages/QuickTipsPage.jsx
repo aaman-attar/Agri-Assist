@@ -61,7 +61,7 @@ const QuickTipsPage = () => {
 
   return (
     <div className="p-6 min-h-screen bg-green-50">
-      <h2 className="text-2xl font-bold text-green-800 mb-4 text-center">🌿 Quick Farming Tips</h2>
+      <h2 className="text-2xl font-bold text-green-800 mb-4 text-center translatable">🌿 Quick Farming Tips</h2>
 
       <div className="flex flex-col md:flex-row gap-4 mb-6 items-center justify-center">
         {/* Dropdown filter */}
@@ -71,7 +71,7 @@ const QuickTipsPage = () => {
           className="border p-2 rounded"
         >
           {categories.map((cat, idx) => (
-            <option key={idx} value={cat}>
+            <option key={idx} value={cat} className="translatable">
               {cat}
             </option>
           ))}
@@ -90,24 +90,24 @@ const QuickTipsPage = () => {
           onClick={handleSearch}
           className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
         >
-          Search
+          <span className="translatable">Search</span>
         </button>
       </div>
 
-      {error && <p className="text-red-600 text-center">{error}</p>}
+      {error && <p className="text-red-600 text-center translatable">{error}</p>}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredTips.map((tip) => (
           <div key={tip.id} className="bg-white p-4 rounded shadow">
             <h3 className="text-lg font-semibold mb-2">{tip.title}</h3>
             <p className="text-sm text-gray-600 mb-1">
-              <strong>Category:</strong> {tip.category}
+              <strong className="translatable">Category:</strong> {tip.category}
             </p>
             <p className="text-gray-700">{tip.content}</p>
           </div>
         ))}
         {filteredTips.length === 0 && (
-          <p className="col-span-full text-center text-gray-600">No tips found.</p>
+          <p className="col-span-full text-center text-gray-600 translatable">No tips found.</p>
         )}
       </div>
     </div>

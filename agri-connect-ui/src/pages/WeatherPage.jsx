@@ -54,7 +54,7 @@ const WeatherPage = () => {
       style={{ backgroundImage: `url("${bgImage}")` }}
     >
       <div className="max-w-md mx-auto bg-white bg-opacity-90 backdrop-blur-md rounded shadow p-6 w-full">
-        <h2 className="text-3xl font-bold text-blue-700 mb-6 text-center">
+        <h2 className="text-3xl font-bold text-blue-700 mb-6 text-center translatable">
           🌦️ Weather Report
         </h2>
 
@@ -70,11 +70,11 @@ const WeatherPage = () => {
             type="submit"
             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
           >
-            Search
+            <span className="translatable">Search</span>
           </button>
         </form>
 
-        {error && <p className="text-red-600 mb-4 text-center">{error}</p>}
+        {error && <p className="text-red-600 mb-4 text-center translatable">{error}</p>}
 
         {weather && (
           <div className="text-center space-y-3">
@@ -91,26 +91,26 @@ const WeatherPage = () => {
               />
             )}
 
-            <div className="text-xl font-medium text-gray-800">
+            <div className="text-xl font-medium text-gray-800 translatable">
               {weather.weather[0].main} - {weather.weather[0].description}
             </div>
 
             <div className="flex justify-around text-gray-700 text-base mt-4">
-              <div>
+              <div className="translatable">
                 🌡️ <strong>{weather.main.temp}°C</strong><br />
                 Feels like: {weather.main.feels_like}°C
               </div>
-              <div>
+              <div className="translatable">
                 💧 <strong>{weather.main.humidity}%</strong><br />
                 Humidity
               </div>
-              <div>
+              <div className="translatable">
                 💨 <strong>{weather.wind.speed} m/s</strong><br />
                 Wind Speed
               </div>
             </div>
 
-            <div className="mt-4 text-sm text-gray-600">
+            <div className="mt-4 text-sm text-gray-600 translatable">
               🌅 Sunrise: {new Date(weather.sys.sunrise * 1000).toLocaleTimeString()}<br />
               🌇 Sunset: {new Date(weather.sys.sunset * 1000).toLocaleTimeString()}
             </div>

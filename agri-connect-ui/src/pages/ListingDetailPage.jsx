@@ -18,12 +18,12 @@ useEffect(() => {
 }, [id]);
 
 
-  if (!listing) return <div className="p-6">Loading...</div>;
+  if (!listing) return <div className="p-6 translatable">Loading...</div>;
 
   return (
     <div className="p-6 max-w-2xl mx-auto border rounded shadow">
-      <h2 className="text-3xl font-bold mb-4">{listing.title}</h2>
-    <p>{`http://127.0.0.1:8000${listing.image}`}</p>
+      <h2 className="text-3xl font-bold mb-4 translatable">{listing.title}</h2>
+    <p className="translatable">{`http://127.0.0.1:8000${listing.image}`}</p>
       {listing.image && (
         <img
   src={listing.image.startsWith('http') ? listing.image : `http://127.0.0.1:8000${listing.image}`}
@@ -37,17 +37,17 @@ useEffect(() => {
       <p className="text-green-700 font-bold mb-2 text-lg">₹{listing.price}</p>
 
       <div className="mb-2">
-        <strong>Category:</strong> {listing.category}
+        <strong className="translatable">Category:</strong> {listing.category}
       </div>
       <div className="mb-2">
-        <strong>Location:</strong> {listing.location}
+        <strong className="translatable">Location:</strong> {listing.location}
       </div>
       <div className="mb-2">
-        <strong>Contact:</strong> {listing.contact}
+        <strong className="translatable">Contact:</strong> {listing.contact}
       </div>
 
       <p className="text-sm text-gray-500">
-        Posted on {new Date(listing.date_posted).toLocaleDateString()}
+        <span className="translatable">Posted on</span> {new Date(listing.date_posted).toLocaleDateString()}
       </p>
     </div>
   );

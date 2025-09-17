@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { LanguageProvider } from './context/LanguageContext';
+import { initTranslator, setLanguage } from './utils/translator';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,6 +14,11 @@ root.render(
     </LanguageProvider>
   </React.StrictMode>
 );
+
+// Initialize dynamic translator (LibreTranslate based)
+initTranslator();
+// Optional: expose for debugging
+window.setSiteLanguage = setLanguage;
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

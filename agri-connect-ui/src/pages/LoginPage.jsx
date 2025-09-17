@@ -32,7 +32,7 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen bg-green-100 flex justify-center items-center">
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold text-green-700 text-center mb-6">Farmer Login/Register</h2>
+        <h2 className="text-2xl font-bold text-green-700 text-center mb-6 translatable">Farmer Login/Register</h2>
 
         <input
           type="text"
@@ -68,10 +68,10 @@ const LoginPage = () => {
           type="submit"
           className="bg-green-600 text-white w-full py-2 rounded hover:bg-green-700"
         >
-          Submit
+          <span className="translatable">Submit</span>
         </button>
 
-        {message && <p className="text-center mt-4 text-red-600 font-medium">{message}</p>}
+        {message && <p className="text-center mt-4 text-red-600 font-medium translatable">{message}</p>}
       </form>
     </div>
   );

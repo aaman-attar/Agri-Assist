@@ -33,7 +33,7 @@ const MarketPricesPage = () => {
   return (
     <div className="min-h-screen bg-green-50 p-6">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold text-green-800 mb-6 flex items-center gap-2">
+        <h1 className="text-3xl font-bold text-green-800 mb-6 flex items-center gap-2 translatable">
           🌾 Market Price Dashboard
         </h1>
 
@@ -49,12 +49,12 @@ const MarketPricesPage = () => {
           <table className="min-w-full table-auto border-collapse shadow-md">
             <thead className="bg-green-100 text-green-800">
               <tr>
-                <th className="px-4 py-3 border-b">Crop</th>
-                <th className="px-4 py-3 border-b">Market</th>
-                <th className="px-4 py-3 border-b">State</th>
-                <th className="px-4 py-3 border-b">Price</th>
-                <th className="px-4 py-3 border-b">Unit</th>
-                <th className="px-4 py-3 border-b">Date</th>
+                <th className="px-4 py-3 border-b translatable">Crop</th>
+                <th className="px-4 py-3 border-b translatable">Market</th>
+                <th className="px-4 py-3 border-b translatable">State</th>
+                <th className="px-4 py-3 border-b translatable">Price</th>
+                <th className="px-4 py-3 border-b translatable">Unit</th>
+                <th className="px-4 py-3 border-b translatable">Date</th>
               </tr>
             </thead>
             <tbody>
@@ -88,7 +88,7 @@ const MarketPricesPage = () => {
                 <tr>
                   <td
                     colSpan="6"
-                    className="text-center text-gray-600 py-6"
+                    className="text-center text-gray-600 py-6 translatable"
                   >
                     No matching results. Try a different crop or market.
                   </td>

@@ -115,3 +115,48 @@ class QuickTipListCreateView(generics.ListCreateAPIView):
 class QuickTipDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = QuickTip.objects.all()
     serializer_class = QuickTipSerializer
+
+# --- LibreTranslate batch translation endpoint ---
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import api_view
+import requests
+
+@csrf_exempt
+@api_view(['POST'])
+def translate_batch(request):
+    """
+    Payload: { "texts": ["Hello", "World"], "target": "hi" }
+    Returns: { "translations": ["नमस्ते", "विश्व"] }
+    """
+    data = request.data or {}
+    texts = data.get('texts')
+    target = data.get('target')
+
+    if not isinstance(texts, list) or not texts:
+        return Response({"error": "'texts' must be a non-empty list"}, status=status.HTTP_400_BAD_REQUEST)
+    if not isinstance(target, str) or not target:
+        return Response({"error": "'target' must be a language code string"}, status=status.HTTP_400_BAD_REQUEST)
+
+    translations = []
+    url = 'https://libretranslate.com/translate'
+    for text in texts:
+        try:
+            resp = requests.post(
+                url,
+                data={
+                    'q': text or '',
+                    'source': 'auto',
+                    'target': target,
+                    'format': 'text',
+                },
+                timeout=10,
+            )
+            if resp.status_code == 200:
+                j = resp.json()
+                translations.append(j.get('translatedText', ''))
+            else:
+                translations.append('')
+        except Exception:
+            translations.append('')
+
+    return Response({"translations": translations})

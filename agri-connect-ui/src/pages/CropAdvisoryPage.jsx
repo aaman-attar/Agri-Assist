@@ -39,7 +39,7 @@ const CropAdvisoryPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-green-100 flex justify-center items-center p-6">
       <div className="bg-white shadow-xl rounded-lg p-8 w-full max-w-xl">
-        <h2 className="text-3xl font-extrabold text-green-700 mb-6 text-center">
+        <h2 className="text-3xl font-extrabold text-green-700 mb-6 text-center translatable">
           🌾 AI Crop Advisory
         </h2>
 
@@ -53,11 +53,11 @@ const CropAdvisoryPage = () => {
               required
               className="flex-1 p-2 border rounded"
             >
-              <option value="">Select Soil Type</option>
-              <option value="Loamy">Loamy</option>
-              <option value="Sandy">Sandy</option>
-              <option value="Clayey">Clayey</option>
-              <option value="Silty">Silty</option>
+              <option value="" className="translatable">Select Soil Type</option>
+              <option value="Loamy" className="translatable">Loamy</option>
+              <option value="Sandy" className="translatable">Sandy</option>
+              <option value="Clayey" className="translatable">Clayey</option>
+              <option value="Silty" className="translatable">Silty</option>
             </select>
           </div>
 
@@ -96,10 +96,10 @@ const CropAdvisoryPage = () => {
               required
               className="flex-1 p-2 border rounded"
             >
-              <option value="">Select Season</option>
-              <option value="Kharif">Kharif</option>
-              <option value="Rabi">Rabi</option>
-              <option value="Zaid">Zaid</option>
+              <option value="" className="translatable">Select Season</option>
+              <option value="Kharif" className="translatable">Kharif</option>
+              <option value="Rabi" className="translatable">Rabi</option>
+              <option value="Zaid" className="translatable">Zaid</option>
             </select>
           </div>
 
@@ -107,7 +107,7 @@ const CropAdvisoryPage = () => {
             type="submit"
             className="w-full bg-green-600 text-white font-semibold py-2 rounded hover:bg-green-700 transition"
           >
-            Get Advisory
+            <span className="translatable">Get Advisory</span>
           </button>
         </form>
 
@@ -115,14 +115,14 @@ const CropAdvisoryPage = () => {
           <div className="mt-6 text-center">
             <div className="bg-green-100 border-l-4 border-green-600 p-4 rounded shadow-md">
               <p className="text-green-800 text-lg">
-                ✅ Recommended Crop: <span className="font-bold">{result}</span>
+                <span className="translatable">✅ Recommended Crop:</span> <span className="font-bold">{result}</span>
               </p>
             </div>
           </div>
         )}
 
         {error && (
-          <p className="text-red-600 text-center mt-4">{error}</p>
+          <p className="text-red-600 text-center mt-4 translatable">{error}</p>
         )}
       </div>
     </div>

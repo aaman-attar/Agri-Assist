@@ -24,11 +24,11 @@ const EditListingPage = () => {
     navigate('/marketplace');
   };
 
-  if (!form) return <p className="p-6">Loading...</p>;
+  if (!form) return <p className="p-6 translatable">Loading...</p>;
 
   return (
     <div className="p-6 max-w-xl mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Edit Listing</h2>
+      <h2 className="text-2xl font-bold mb-4 translatable">Edit Listing</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         {['title', 'description', 'price', 'category', 'location', 'contact'].map(field => (
           <input
@@ -47,7 +47,7 @@ const EditListingPage = () => {
           accept="image/*"
           onChange={e => setForm({ ...form, image: e.target.files[0] })}
         />
-        <button className="bg-blue-600 text-white px-4 py-2 rounded">Update</button>
+        <button className="bg-blue-600 text-white px-4 py-2 rounded"><span className="translatable">Update</span></button>
       </form>
     </div>
   );
