@@ -19,6 +19,9 @@ export const farmerLogin = (data) => API.post('farmer-login/', data);
 // Market prices
 export const getMarketPrices = (params) => API.get('market-prices/', { params });
 
+// Crop advisory
+export const predictCrop = (payload) => API.post('predict-crop/', payload);
+
 // Marketplace API
 export const fetchListings = () => API.get('marketplace/');
 export const getListingDetail = (id) => API.get(`marketplace/${id}/`);

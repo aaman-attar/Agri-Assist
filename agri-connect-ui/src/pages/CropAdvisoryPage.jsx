@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { predictCrop } from '../services/api';
 import { FaThermometerHalf, FaCloudRain, FaSeedling, FaCalendarAlt } from 'react-icons/fa';
 
 const CropAdvisoryPage = () => {
@@ -23,11 +23,16 @@ const CropAdvisoryPage = () => {
     setError('');
 
     try {
-      const res = await axios.post('http://127.0.0.1:8000/api/predict-crop/', form);
-      setResult(res.data.recommended_crop);
+      const res = await predictCrop(form);
+      if (res.data && res.data.recommended_crop) {
+        setResult(res.data.recommended_crop);
+      } else {
+        setError('Prediction failed. Please try again.');
+      }
     } catch (err) {
       console.error(err);
-      setError('Prediction failed. Please check inputs.');
+      const msg = err?.response?.data?.error || 'Prediction failed. Please check inputs.';
+      setError(msg);
     }
   };
 
@@ -49,11 +54,10 @@ const CropAdvisoryPage = () => {
               className="flex-1 p-2 border rounded"
             >
               <option value="">Select Soil Type</option>
-              <option value="Sandy">Sandy</option>
               <option value="Loamy">Loamy</option>
+              <option value="Sandy">Sandy</option>
               <option value="Clayey">Clayey</option>
-              <option value="Black">Black</option>
-              <option value="Red">Red</option>
+              <option value="Silty">Silty</option>
             </select>
           </div>
 
@@ -95,7 +99,7 @@ const CropAdvisoryPage = () => {
               <option value="">Select Season</option>
               <option value="Kharif">Kharif</option>
               <option value="Rabi">Rabi</option>
-              <option value="Summer">Summer</option>
+              <option value="Zaid">Zaid</option>
             </select>
           </div>
 
