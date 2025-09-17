@@ -27,7 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["agri-assist-9t3e.onrender.com"]
 
-
+CORS_ALLOWED_ORIGINS = [
+    "https://agri-assist-frontend.onrender.com"
+]
 # Application definition
 
 INSTALLED_APPS = [
