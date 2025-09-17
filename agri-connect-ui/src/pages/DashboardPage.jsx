@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaSignOutAlt } from 'react-icons/fa';
 import { useLanguage } from '../context/LanguageContext';
-import { translateBatch } from '../services/api';
+import { setLanguage as setSiteLanguage, getLanguage as getSiteLanguage } from '../utils/translator';
 
 const features = [
   { name: 'Market Price', route: '/market-prices', translationKey: 'feature_market_prices' },
@@ -15,10 +15,8 @@ const features = [
 const DashboardPage = () => {
   const [farmer, setFarmer] = useState(null);
   const navigate = useNavigate();
-  const { t, lang, setLang } = useLanguage();
-  const [translatedLabels, setTranslatedLabels] = useState({ welcome: '', features: {} });
+  const { t } = useLanguage();
   const [currentLang, setCurrentLang] = useState('en');
-  const [observer, setObserver] = useState(null);
 
   useEffect(() => {
     const stored = localStorage.getItem('farmer');
@@ -35,85 +33,14 @@ const DashboardPage = () => {
     navigate('/');
   };
 
-  const buildWelcomeText = () =>
-    `Welcome ${farmer?.name || ''} from ${farmer?.location || ''}`;
-
-  const collectTranslatableElements = () => {
-    return Array.from(document.querySelectorAll('.translatable'));
-  };
-
-  const getOriginalText = (el) => {
-    if (!el.dataset.originalText) {
-      el.dataset.originalText = el.textContent || '';
-    }
-    return el.dataset.originalText;
-  };
-
-  const translatePageTexts = async (target) => {
-    const els = collectTranslatableElements();
-    if (els.length === 0) return;
-
-    const texts = els.map(getOriginalText);
-    try {
-      const res = await translateBatch(texts, target);
-      const translations = Array.isArray(res?.data?.translations) ? res.data.translations : [];
-      els.forEach((el, idx) => {
-        const t = translations[idx];
-        if (typeof t === 'string' && t.length > 0) {
-          el.textContent = t;
-        }
-      });
-    } catch (e) {
-      console.error('Batch translate failed', e);
-    }
-  };
-
   const handleTranslate = async (target) => {
     setCurrentLang(target);
-    // translate the page elements
-    await translatePageTexts(target);
-    // Also update local hint for existing fallback translations
-    setLang(target);
+    await setSiteLanguage(target);
   };
-
   useEffect(() => {
-    // Set up MutationObserver to translate new elements dynamically
-    const obs = new MutationObserver((mutations) => {
-      const added = [];
-      mutations.forEach((m) => {
-        m.addedNodes.forEach((node) => {
-          if (node.nodeType === 1) {
-            const el = node;
-            if (el.classList && el.classList.contains('translatable')) {
-              added.push(el);
-            }
-            el.querySelectorAll && added.push(...el.querySelectorAll('.translatable'));
-          }
-        });
-      });
-      if (added.length > 0) {
-        // translate only newly added ones
-        const texts = added.map(getOriginalText);
-        translateBatch(texts, currentLang)
-          .then((res) => {
-            const translations = Array.isArray(res?.data?.translations) ? res.data.translations : [];
-            added.forEach((el, idx) => {
-              const t = translations[idx];
-              if (typeof t === 'string' && t.length > 0) {
-                el.textContent = t;
-              }
-            });
-          })
-          .catch((e) => console.error('Observer translate failed', e));
-      }
-    });
-
-    obs.observe(document.body, { childList: true, subtree: true });
-    setObserver(obs);
-    return () => {
-      try { obs.disconnect(); } catch {}
-    };
-  }, [currentLang]);
+    // initialize current language from global translator
+    setCurrentLang(getSiteLanguage() || 'en');
+  }, []);
 
   return (
     <div
@@ -149,7 +76,7 @@ const DashboardPage = () => {
 
       <div className="bg-white bg-opacity-80 max-w-4xl mx-auto mt-16 p-8 rounded shadow-md">
         <h1 className="text-3xl font-bold text-green-800 mb-6 text-center translatable">
-          👋 {translatedLabels.welcome || t('welcome', { name: farmer?.name || '', location: farmer?.location || '' })}
+          👋 {t('welcome', { name: farmer?.name || '', location: farmer?.location || '' })}
         </h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -160,7 +87,7 @@ const DashboardPage = () => {
               className="block bg-white bg-opacity-90 p-6 rounded shadow-lg border border-green-200 hover:scale-105 transition-transform duration-300"
             >
               <h2 className="text-xl font-semibold text-green-700 translatable">
-                {translatedLabels.features[feature.name] || t(feature.translationKey)}
+                {t(feature.translationKey)}
               </h2>
               <p className="text-sm text-gray-600 mt-2 translatable">Click to explore {feature.name}</p>
             </Link>
