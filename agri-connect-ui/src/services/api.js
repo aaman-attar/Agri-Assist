@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: process.env.REACT_APP_API_URL, // Render backend URL from .env
+  // Use env when provided by build system, otherwise fall back to the deployed backend URL
+  baseURL: process.env.REACT_APP_API_URL || 'https://agri-assist-9t3e.onrender.com/api/',
 });
 
 // Farmer login

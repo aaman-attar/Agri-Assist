@@ -3,7 +3,10 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import Farmer
 from .serializers import FarmerSerializer
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
+@method_decorator(csrf_exempt, name='dispatch')
 class FarmerLoginOrRegister(APIView):
     def post(self, request):
         phone = request.data.get('phone')

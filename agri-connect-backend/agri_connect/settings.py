@@ -30,6 +30,10 @@ ALLOWED_HOSTS = ["agri-assist-9t3e.onrender.com"]
 CORS_ALLOWED_ORIGINS = [
     "https://agri-assist-frontend.onrender.com"
 ]
+# Trust the frontend origin for CSRF checks when using cookie-based requests
+CSRF_TRUSTED_ORIGINS = [
+    "https://agri-assist-frontend.onrender.com",
+]
 # Application definition
 
 INSTALLED_APPS = [
