@@ -1,12 +1,23 @@
 import axios from 'axios';
 
+// Determine baseURL robustly. If the env var is missing, malformed, or was set like
+// 'REACT_APP_API_URL=https://...' (including the key by mistake), use the fallback.
+const envUrl = process.env.REACT_APP_API_URL;
+const isValidAbsoluteUrl = (u) => typeof u === 'string' && /^https?:\/\//i.test(u);
+const looksMisconfigured = (u) => typeof u === 'string' && /^REACT_APP_/i.test(u);
+const resolvedBaseURL = isValidAbsoluteUrl(envUrl) && !looksMisconfigured(envUrl)
+  ? envUrl
+  : 'https://agri-assist-9t3e.onrender.com/api/';
+
 const API = axios.create({
-  // Use env when provided by build system, otherwise fall back to the deployed backend URL
-  baseURL: process.env.REACT_APP_API_URL || 'https://agri-assist-9t3e.onrender.com/api/',
+  baseURL: resolvedBaseURL,
 });
 
 // Farmer login
 export const farmerLogin = (data) => API.post('farmer-login/', data);
+
+// Market prices
+export const getMarketPrices = (params) => API.get('market-prices/', { params });
 
 // Marketplace API
 export const fetchListings = () => API.get('marketplace/');

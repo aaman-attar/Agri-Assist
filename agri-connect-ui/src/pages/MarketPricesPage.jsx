@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { getMarketPrices } from "../services/api";
 
 const MarketPricesPage = () => {
   const [prices, setPrices] = useState([]);
@@ -7,14 +7,16 @@ const MarketPricesPage = () => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    axios
-      .get("http://127.0.0.1:8000/api/market-prices/")
+    getMarketPrices()
       .then((res) => {
-        setPrices(res.data);
-        setFilteredPrices(res.data);
+        const data = Array.isArray(res.data) ? res.data : [];
+        setPrices(data);
+        setFilteredPrices(data);
       })
       .catch((err) => {
         console.error("Error fetching market prices:", err);
+        setPrices([]);
+        setFilteredPrices([]);
       });
   }, []);
 
