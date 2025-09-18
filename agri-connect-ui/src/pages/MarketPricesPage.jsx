@@ -31,65 +31,49 @@ const MarketPricesPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-green-50 p-6">
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold text-green-800 mb-6 flex items-center gap-2">
-          🌾 Market Price Dashboard
-        </h1>
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-lime-100 py-8">
+      <div className="container-app">
+        <h1 className="text-3xl font-extrabold text-green-800 mb-6 flex items-center gap-2">🌾 Market Price Dashboard</h1>
 
         <input
           type="text"
           value={search}
           onChange={handleSearch}
           placeholder="🔍 Search by crop or market"
-          className="w-full px-4 py-2 mb-6 rounded border border-green-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400"
+          className="input mb-6"
         />
 
-        <div className="overflow-x-auto">
-          <table className="min-w-full table-auto border-collapse shadow-md">
-            <thead className="bg-green-100 text-green-800">
+        <div className="card card-hover overflow-x-auto">
+          <table className="table-base">
+            <thead className="table-head">
               <tr>
-                <th className="px-4 py-3 border-b">Crop</th>
-                <th className="px-4 py-3 border-b">Market</th>
-                <th className="px-4 py-3 border-b">State</th>
-                <th className="px-4 py-3 border-b">Price</th>
-                <th className="px-4 py-3 border-b">Unit</th>
-                <th className="px-4 py-3 border-b">Date</th>
+                <th className="px-4 py-3">Crop</th>
+                <th className="px-4 py-3">Market</th>
+                <th className="px-4 py-3">State</th>
+                <th className="px-4 py-3">Price</th>
+                <th className="px-4 py-3">Unit</th>
+                <th className="px-4 py-3">Date</th>
               </tr>
             </thead>
             <tbody>
               {filteredPrices.length > 0 ? (
                 filteredPrices.map((item, index) => (
-                  <tr
-                    key={item.id}
-                    className={index % 2 === 0 ? "bg-white" : "bg-green-50"}
-                  >
-                    <td className="px-4 py-2 border">{item.crop}</td>
-                    <td className="px-4 py-2 border">{item.market}</td>
-                    <td className="px-4 py-2 border">
-                      <span className="inline-block bg-green-200 text-green-800 text-xs font-semibold px-2 py-1 rounded-full">
-                        {item.state}
-                      </span>
+                  <tr key={item.id} className="table-row">
+                    <td className="px-4 py-2">{item.crop}</td>
+                    <td className="px-4 py-2">{item.market}</td>
+                    <td className="px-4 py-2">
+                      <span className="badge-success">{item.state}</span>
                     </td>
-                    <td className="px-4 py-2 border text-green-700 font-semibold">
-                      ₹{item.price}
+                    <td className="px-4 py-2 text-green-700 font-semibold">₹{item.price}</td>
+                    <td className="px-4 py-2">
+                      <span className="badge-info bg-slate-100 text-slate-700 border-slate-200">{item.unit}</span>
                     </td>
-                    <td className="px-4 py-2 border">
-                      <span className="inline-block bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">
-                        {item.unit}
-                      </span>
-                    </td>
-                    <td className="px-4 py-2 border text-sm text-gray-600">
-                      {new Date(item.date).toLocaleDateString()}
-                    </td>
+                    <td className="px-4 py-2 text-sm text-slate-600">{new Date(item.date).toLocaleDateString()}</td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td
-                    colSpan="6"
-                    className="text-center text-gray-600 py-6"
-                  >
+                  <td colSpan="6" className="text-center text-slate-600 py-6">
                     No matching results. Try a different crop or market.
                   </td>
                 </tr>
@@ -100,6 +84,6 @@ const MarketPricesPage = () => {
       </div>
     </div>
   );
-};
+}
 
 export default MarketPricesPage;

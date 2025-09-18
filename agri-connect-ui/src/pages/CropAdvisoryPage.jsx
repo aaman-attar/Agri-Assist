@@ -50,129 +50,63 @@ const CropAdvisoryPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-green-100 flex justify-center items-center p-6">
-      <div className="bg-white shadow-xl rounded-lg p-8 w-full max-w-xl">
-        <h2 className="text-3xl font-extrabold text-green-700 mb-6 text-center">
-          🌾 AI Crop Advisory (Kaggle-based)
-        </h2>
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-lime-100 py-8">
+      <div className="container-app max-w-xl">
+        <div className="card card-hover p-6">
+          <h2 className="text-3xl font-extrabold text-green-700 mb-6 text-center">🌾 AI Crop Advisory (Kaggle-based)</h2>
 
-        <form onSubmit={handleSubmit} className="grid gap-4">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <form onSubmit={handleSubmit} className="grid gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="flex items-center gap-2">
+                <FaLeaf className="text-green-700" />
+                <input type="number" name="N" placeholder="Nitrogen (N)" value={form.N} onChange={handleChange} required className="input" />
+              </div>
+              <div className="flex items-center gap-2">
+                <FaLeaf className="text-green-700" />
+                <input type="number" name="P" placeholder="Phosphorus (P)" value={form.P} onChange={handleChange} required className="input" />
+              </div>
+              <div className="flex items-center gap-2">
+                <FaLeaf className="text-green-700" />
+                <input type="number" name="K" placeholder="Potassium (K)" value={form.K} onChange={handleChange} required className="input" />
+              </div>
+            </div>
+
             <div className="flex items-center gap-2">
-              <FaLeaf className="text-green-700" />
-              <input
-                type="number"
-                name="N"
-                placeholder="Nitrogen (N)"
-                value={form.N}
-                onChange={handleChange}
-                required
-                className="flex-1 p-2 border rounded"
-              />
+              <FaThermometerHalf className="text-red-600" />
+              <input type="number" name="temperature" placeholder="Temperature (°C)" value={form.temperature} onChange={handleChange} required className="input" />
             </div>
+
             <div className="flex items-center gap-2">
-              <FaLeaf className="text-green-700" />
-              <input
-                type="number"
-                name="P"
-                placeholder="Phosphorus (P)"
-                value={form.P}
-                onChange={handleChange}
-                required
-                className="flex-1 p-2 border rounded"
-              />
+              <FaTint className="text-blue-600" />
+              <input type="number" name="humidity" placeholder="Humidity (%)" value={form.humidity} onChange={handleChange} required className="input" />
             </div>
+
             <div className="flex items-center gap-2">
-              <FaLeaf className="text-green-700" />
-              <input
-                type="number"
-                name="K"
-                placeholder="Potassium (K)"
-                value={form.K}
-                onChange={handleChange}
-                required
-                className="flex-1 p-2 border rounded"
-              />
+              <FaVial className="text-purple-600" />
+              <input type="number" name="ph" placeholder="pH" value={form.ph} onChange={handleChange} step="0.01" required className="input" />
             </div>
-          </div>
 
-          <div className="flex items-center gap-2">
-            <FaThermometerHalf className="text-red-600" />
-            <input
-              type="number"
-              name="temperature"
-              placeholder="Temperature (°C)"
-              value={form.temperature}
-              onChange={handleChange}
-              required
-              className="flex-1 p-2 border rounded"
-            />
-          </div>
-
-          <div className="flex items-center gap-2">
-            <FaTint className="text-blue-600" />
-            <input
-              type="number"
-              name="humidity"
-              placeholder="Humidity (%)"
-              value={form.humidity}
-              onChange={handleChange}
-              required
-              className="flex-1 p-2 border rounded"
-            />
-          </div>
-
-          <div className="flex items-center gap-2">
-            <FaVial className="text-purple-600" />
-            <input
-              type="number"
-              name="ph"
-              placeholder="pH"
-              value={form.ph}
-              onChange={handleChange}
-              step="0.01"
-              required
-              className="flex-1 p-2 border rounded"
-            />
-          </div>
-
-          <div className="flex items-center gap-2">
-            <FaCloudRain className="text-blue-600" />
-            <input
-              type="number"
-              name="rainfall"
-              placeholder="Rainfall (mm)"
-              value={form.rainfall}
-              onChange={handleChange}
-              required
-              className="flex-1 p-2 border rounded"
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="w-full bg-green-600 text-white font-semibold py-2 rounded hover:bg-green-700 transition"
-          >
-            Get Advisory
-          </button>
-        </form>
-
-        {result && (
-          <div className="mt-6 text-center">
-            <div className="bg-green-100 border-l-4 border-green-600 p-4 rounded shadow-md">
-              <p className="text-green-800 text-lg">
-                ✅ Recommended Crop: <span className="font-bold">{result}</span>
-              </p>
+            <div className="flex items-center gap-2">
+              <FaCloudRain className="text-blue-600" />
+              <input type="number" name="rainfall" placeholder="Rainfall (mm)" value={form.rainfall} onChange={handleChange} required className="input" />
             </div>
-          </div>
-        )}
 
-        {error && (
-          <p className="text-red-600 text-center mt-4">{error}</p>
-        )}
+            <button type="submit" className="btn-primary w-full py-2">Get Advisory</button>
+          </form>
+
+          {result && (
+            <div className="mt-6 text-center">
+              <div className="alert-success">
+                <p className="text-green-800 text-lg">✅ Recommended Crop: <span className="font-bold">{result}</span></p>
+              </div>
+            </div>
+          )}
+
+          {error && <p className="alert-error text-center mt-4">{error}</p>}
+        </div>
       </div>
     </div>
   );
-};
+}
 
 export default CropAdvisoryPage;

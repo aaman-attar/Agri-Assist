@@ -30,51 +30,52 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-green-100 flex justify-center items-center">
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold text-green-700 text-center mb-6">Farmer Login/Register</h2>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 via-emerald-50 to-lime-100 p-4">
+      <form onSubmit={handleSubmit} className="card w-full max-w-md p-6 shadow-soft">
+        <h2 className="text-2xl font-extrabold text-green-800 text-center mb-6">Farmer Login / Register</h2>
 
+        <label className="label" htmlFor="name">Name</label>
         <input
+          id="name"
           type="text"
           name="name"
-          placeholder="Name"
+          placeholder="Your full name"
           value={form.name}
           onChange={handleChange}
           required
-          className="w-full p-2 border border-gray-300 rounded mb-4"
+          className="input mb-4"
         />
 
+        <label className="label" htmlFor="phone">Phone Number</label>
         <input
+          id="phone"
           type="text"
           name="phone"
-          placeholder="Phone Number"
+          placeholder="e.g. 9876543210"
           value={form.phone}
           onChange={handleChange}
           required
-          className="w-full p-2 border border-gray-300 rounded mb-4"
+          className="input mb-4"
         />
 
+        <label className="label" htmlFor="location">Location</label>
         <input
+          id="location"
           type="text"
           name="location"
-          placeholder="Location"
+          placeholder="Village / City"
           value={form.location}
           onChange={handleChange}
           required
-          className="w-full p-2 border border-gray-300 rounded mb-4"
+          className="input mb-6"
         />
 
-        <button
-          type="submit"
-          className="bg-green-600 text-white w-full py-2 rounded hover:bg-green-700"
-        >
-          Submit
-        </button>
+        <button type="submit" className="btn-primary w-full py-2">Submit</button>
 
-        {message && <p className="text-center mt-4 text-red-600 font-medium">{message}</p>}
+        {message && <p className="alert-error mt-4 text-center">{message}</p>}
       </form>
     </div>
   );
-};
+}
 
 export default LoginPage;
