@@ -11,6 +11,7 @@ import EditListingPage from './pages/EditListingPage';
 import CropAdvisoryPage from './pages/CropAdvisoryPage';
 import QuickTipsPage from './pages/QuickTipsPage';
 import AskAIPage from './pages/AskAIPage';
+import GovernmentSchemesPage from './pages/GovernmentSchemesPage';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/advisory" element={<CropAdvisoryPage />} />
         <Route path="/quick-tips" element={<QuickTipsPage />} />
         <Route path="/ask-ai" element={<AskAIPage />} />
+        <Route path="/government-schemes" element={<GovernmentSchemesPage />} />
       </Routes>
     </Router>
   );

@@ -10,6 +10,7 @@ const features = [
   { name: 'Quick Tips', route: '/quick-tips', translationKey: 'feature_quick_tips' },
   { name: 'Marketplace', route: '/marketplace', translationKey: 'feature_marketplace' },
   { name: 'Ask AI', route: '/ask-ai', translationKey: 'feature_ask_ai' },
+  { name: 'Government Schemes', route: '/government-schemes', translationKey: 'feature_gov_schemes' },
 ];
 
 const DashboardPage = () => {
