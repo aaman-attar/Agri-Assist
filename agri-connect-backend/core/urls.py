@@ -4,6 +4,7 @@ from .views import get_market_prices
 from .views import MarketplaceListCreateView, MarketplaceDetailView
 from .views import predict_crop
 from .views import QuickTipListCreateView, QuickTipDetailView
+from .views import ask_ai
 
 urlpatterns = [
     path('farmer-login/', FarmerLoginOrRegister.as_view()),
@@ -14,5 +15,5 @@ urlpatterns = [
     path('predict-crop/', predict_crop),
     path('quicktips/', QuickTipListCreateView.as_view()),
     path('quicktips/<int:pk>/', QuickTipDetailView.as_view()),
+    path('ask-ai/', ask_ai),
 ]
-

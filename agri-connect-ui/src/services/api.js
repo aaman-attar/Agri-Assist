@@ -40,3 +40,6 @@ export const updateListing = (id, formData) =>
 export const deleteListing = (id) => API.delete(`marketplace/${id}/`);
 
 export const getQuickTips = () => API.get('quicktips/');
+
+// Ask AI (Gemini proxy)
+export const askAI = (question) => API.post('ask-ai/', { question });

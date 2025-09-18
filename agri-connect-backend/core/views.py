@@ -5,6 +5,8 @@ from .models import Farmer
 from .serializers import FarmerSerializer
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
+import google.generativeai as genai
 
 @method_decorator(csrf_exempt, name='dispatch')
 class FarmerLoginOrRegister(APIView):
@@ -115,3 +117,33 @@ class QuickTipListCreateView(generics.ListCreateAPIView):
 class QuickTipDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = QuickTip.objects.all()
     serializer_class = QuickTipSerializer
+
+@api_view(['POST'])
+def ask_ai(request):
+    """
+    Proxy endpoint to ask questions to Google's Gemini API.
+    Expects JSON body: { "question": "..." }
+    Returns: { "answer": "..." }
+    """
+    question = (request.data.get('question') or '').strip()
+    if not question:
+        return Response({"error": "'question' is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+    api_key = getattr(settings, 'GOOGLE_API_KEY', '')
+    if not api_key:
+        return Response({"error": "GOOGLE_API_KEY is not configured on the server"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    try:
+        genai.configure(api_key=api_key)
+        model = genai.GenerativeModel('gemini-1.5-flash')
+        gemini_response = model.generate_content(question)
+        answer_text = getattr(gemini_response, 'text', None) or ''
+        if not answer_text and hasattr(gemini_response, 'candidates'):
+            # Fallback if SDK returns structured response
+            try:
+                answer_text = gemini_response.candidates[0].content.parts[0].text
+            except Exception:
+                answer_text = ''
+        return Response({"answer": answer_text})
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

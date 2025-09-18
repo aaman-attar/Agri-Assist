@@ -9,6 +9,7 @@ const features = [
   { name: 'AI-Based Crop Advisory', route: '/advisory', translationKey: 'feature_ai_advisory' },
   { name: 'Quick Tips', route: '/quick-tips', translationKey: 'feature_quick_tips' },
   { name: 'Marketplace', route: '/marketplace', translationKey: 'feature_marketplace' },
+  { name: 'Ask AI', route: '/ask-ai', translationKey: 'feature_ask_ai' },
 ];
 
 const DashboardPage = () => {
